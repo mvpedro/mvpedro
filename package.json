@@ -1,5 +1,6 @@
 {
   "name": "mvpedro",
+  "homepage": "https://www.mvpedro.com",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,7 +8,9 @@
     "dev": "next dev",
     "postinstall": "prisma generate",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.5",

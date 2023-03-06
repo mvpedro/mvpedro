@@ -13,7 +13,7 @@ const Form: FC = () => {
   const postMessage = api.guestbook.postMessage.useMutation({
     onMutate: async (newEntry) => {
       await utils.guestbook.getAll.cancel();
-      utils.guestbook.getAll.setData(undefined, (prevEntries: any) => {
+      utils.guestbook.getAll.setData(undefined, (prevEntries: string) => {
         if (prevEntries) {
           return [newEntry, ...prevEntries];
         } else {
@@ -59,6 +59,10 @@ const Form: FC = () => {
 
 const GuestbookEntries: FC = () => {
   const { data: guestbookEntries, isLoading } = api.guestbook.getAll.useQuery();
+  interface Entry {
+    message: string;
+    name: string;
+  }
 
   if (isLoading) {
     return <div>Fetching messages...</div>;
@@ -66,7 +70,7 @@ const GuestbookEntries: FC = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      {guestbookEntries?.map((entry: any, index: any) => (
+      {guestbookEntries?.map((entry: Entry, index: number) => (
         <div key={index}>
           <p>{entry.message}</p>
           <span>- {entry.name}</span>
